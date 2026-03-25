@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050505;
+  --foreground: #f3f3f3;
+  --neon-green: #75ff4f;
+  --deep-green: #17341a;
+  --gift-red: #ff3434;
+  --panel-black: #0b0b0b;
 }
 
 @theme inline {
@@ -12,15 +16,109 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+.gift-box {
+  position: relative;
+  height: 250px;
+  width: 200px;
+  filter: drop-shadow(0 0 35px rgba(255, 58, 58, 0.35));
+}
+
+.gift-box__body,
+.gift-box__lid {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff6464 0%, #ff2f2f 48%, #c81010 100%);
+}
+
+.gift-box__body {
+  bottom: 0;
+  height: 180px;
+  transform: perspective(600px) rotateX(-6deg);
+  box-shadow:
+    inset -14px -14px 0 rgba(121, 0, 0, 0.18),
+    inset 18px 0 0 rgba(255, 255, 255, 0.06);
+}
+
+.gift-box__lid {
+  top: 18px;
+  height: 58px;
+  transform-origin: left center;
+  transition:
+    transform 320ms ease,
+    top 320ms ease;
+  box-shadow:
+    inset -12px -10px 0 rgba(121, 0, 0, 0.16),
+    0 12px 18px rgba(0, 0, 0, 0.25);
+}
+
+.gift-box__ribbon {
+  position: absolute;
+  background: linear-gradient(180deg, #901515 0%, #651111 100%);
+  box-shadow: 0 0 16px rgba(92, 7, 7, 0.3);
+}
+
+.gift-box__ribbon--vertical {
+  left: 50%;
+  top: 18px;
+  z-index: 3;
+  height: 212px;
+  width: 24px;
+  transform: translateX(-50%);
+}
+
+.gift-box__ribbon--horizontal {
+  left: 0;
+  top: 62px;
+  z-index: 3;
+  height: 24px;
+  width: 100%;
+}
+
+.gift-box::before,
+.gift-box::after {
+  position: absolute;
+  top: -4px;
+  z-index: 4;
+  height: 34px;
+  width: 58px;
+  border: 8px solid #8a1111;
+  border-bottom: 0;
+  content: "";
+}
+
+.gift-box::before {
+  left: 46px;
+  border-radius: 999px 999px 0 999px;
+  transform: rotate(-18deg);
+}
+
+.gift-box::after {
+  right: 46px;
+  border-radius: 999px 999px 999px 0;
+  transform: rotate(18deg);
+}
+
+.gift-box--open .gift-box__lid {
+  top: -16px;
+  transform: translateX(-18px) rotate(-22deg);
 }
